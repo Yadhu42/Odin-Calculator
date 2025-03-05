@@ -7,26 +7,35 @@
         <title>Calculator</title>
     </head>
     <body>
-        <h1>Calculator</h1>
-        <div class="numBtn">   
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button>0</button>
+        <div class="calculator">
+            <div class="display"></div>
+            <div class="allBtns">
+                    <div class="numBtn numPad">   
+                        <button class="digit">1</button>
+                        <button class="digit">2</button>
+                        <button class="digit">3</button>
+                        <button class="digit">4</button>
+                        <button class="digit">5</button>
+                        <button class="digit">6</button>
+                        <button class="digit">7</button>
+                        <button class="digit">8</button>
+                        <button class="digit">9</button>
+                        <div class="unpress digit"></div>
+                        <button class="digit">0</button>
+                        <div class="unpress digit"></div>
+                    </div>
+                <div class="symbols">
+                    <div class="opBtn">
+                        <button class="sign">+</button>
+                        <button class="sign">-</button>
+                        <button class="sign">*</button>
+                        <button class="sign">/</button>
+                    </div>
+                    <button class="equals sign">=</button>
+                    <button class="clear sign">AC</button>
+                </div>
+            </div>
         </div>
-        <div class="opBtn">
-            <button>+</button>
-            <button>-</button>
-            <button>*</button>
-            <button>/</button>
-        </div>
-        <button class="equals">=</button>
     </body>
     <script src="./script.js"></script>
 </html>

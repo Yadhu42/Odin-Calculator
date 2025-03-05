@@ -1,0 +1,59 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 650px;
+    border: solid 1px black;
+    border-radius: 5px;
+    padding: 15px;
+    gap: 20px;
+}
+
+.display{
+    border: solid 1px black;
+    border-radius: 5px;
+    width: 600px;
+    padding: 5px;
+    text-align: right;
+}
+
+.allBtns{
+    width: 600px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.numPad{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.digit{
+    width: 150px;
+    padding: 5px;
+}
+
+.symbols, .opBtn{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sign{
+    width: 80px;
+    padding: 8px;
+}

@@ -1,40 +1,53 @@
 const digit = document.querySelector(`.numBtn`);
 const operator = document.querySelector(`.opBtn`);
 const equals = document.querySelector(`.equals`);
+const clear = document.querySelector(`.clear`);
 const visual = document.querySelector(`.display`);
 const entry = document.createElement(`p`);
 visual.appendChild(entry);
 
+entry.textContent=`0`;
 let input = [];
 let operand = [];
+const keyboard = `1234567890`;
 
 digit.addEventListener(`click`,(event) =>{
-operand.push(event.target.textContent);
-let display = operand.join(``);
-entry.textContent=display;
-//console.log(display);
+    operand.push(event.target.textContent);
+    console.log(operand);
+    displayScreen(operand.join(``));
 });
 
 operator.addEventListener(`click`,(event) =>{
     input.push(operand.join(``),event.target.textContent);
-    display=input.join(``);
-    entry.textContent=display;
-    //console.log(display);
+    displayScreen(input.join(``)); 
     operand = [];
+});
+
+document.addEventListener(`keypress`,(event) =>{
+   if(keyboard.includes(event.key)){
+    operand.push(event.key);
+    displayScreen(operand.join(``));
+   }
 });
 
 equals.addEventListener(`click`,(event) =>{
     input.push(operand.join(``));
-    display=input.join(``);
-    entry.textContent=display;
-    //console.log(display);
-    operand = [];
     let nums = input.slice();
+    operand = [];
     input=[];
-    entry.textContent=operate(nums);
-    //console.log(`final answer:`, operate(nums));
-
+    displayScreen(operate(nums));
 });
+
+clear.addEventListener(`click`,() =>{
+    entry.textContent=`0`;
+    input = [];
+    operand = [];
+});
+
+function displayScreen(content){
+    let display = content;
+    entry.textContent=display;
+}
 
 function sum(...theArgs){
     return theArgs.reduce((first,current) =>{
@@ -53,7 +66,12 @@ function multiply(...theArgs){
 }
 
 function divide(a,b){
-    return Number(a)/Number(b);
+    if(Number(b)===0){
+        return(`Nah bruh :/`);
+    }
+    else{
+        return Number(a)/Number(b);
+    }
 }
 
 function operate (arr){
