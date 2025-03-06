@@ -1,4 +1,5 @@
 const digit = document.querySelector(`.numBtn`);
+const num = document.querySelectorAll(`.digit`);
 const operator = document.querySelector(`.opBtn`);
 const equals = document.querySelector(`.equals`);
 const clear = document.querySelector(`.clear`);
@@ -10,17 +11,32 @@ entry.textContent=`0`;
 let input = [];
 let operand = [];
 const keyboard = `1234567890`;
+const allSymbols = `+-*/`;
 
-digit.addEventListener(`click`,(event) =>{
-    operand.push(event.target.textContent);
-    console.log(operand);
-    displayScreen(operand.join(``));
+num.forEach((element) =>{
+    element.addEventListener(`click`,(event) =>{
+        if(event.target.textContent === `Del`){
+            deleteNum();
+        }
+        else{
+            operand.push(event.target.textContent);
+            displayScreen(operand.join(``));
+        }
+    });
 });
 
 operator.addEventListener(`click`,(event) =>{
-    input.push(operand.join(``),event.target.textContent);
-    displayScreen(input.join(``)); 
-    operand = [];
+    if(operand.length>0){
+        input.push(operand.join(``),event.target.textContent);
+        displayScreen(input.join(``)); 
+        operand = [];
+    }
+    else{
+        operand.push(event.target.textContent);
+        input.push(operand.join());
+        displayScreen(input.join(``));
+        operand=[];
+    }
 });
 
 document.addEventListener(`keypress`,(event) =>{
@@ -31,7 +47,12 @@ document.addEventListener(`keypress`,(event) =>{
 });
 
 equals.addEventListener(`click`,(event) =>{
-    input.push(operand.join(``));
+    if(operand.length>0){
+        input.push(operand.join(``));
+    }
+    else{
+        input.pop();
+    }
     let nums = input.slice();
     operand = [];
     input=[];
@@ -47,6 +68,42 @@ clear.addEventListener(`click`,() =>{
 function displayScreen(content){
     let display = content;
     entry.textContent=display;
+}
+
+function deleteNum(){
+    if(operand.length>0){
+        input.push(operand.join(``));
+    }
+
+    console.log(`before delete:`,operand,input);
+
+    input = checkNegative(input);
+    console.log(input);
+
+    operand=[];
+    input.pop();
+
+    if(input.length>1){
+        displayScreen(input.join(``));
+    }
+    else{
+        displayScreen(`0`);
+    }
+}
+
+function checkNegative(arr){
+    if(allSymbols.includes(arr[0])){
+        if(arr[0]===`-`){
+            let neg = arr[1];
+            arr.splice(0,2,`-${neg}`);
+            console.log(arr);
+        }
+        else{
+            arr=arr.slice(1);
+            console.log(arr);
+        }
+    }
+    return arr;
 }
 
 function sum(...theArgs){
@@ -75,6 +132,8 @@ function divide(a,b){
 }
 
 function operate (arr){
+    arr = checkNegative(arr);
+
     if(arr.length >= 3){
         let count = (arr.length-1)/2;
         for(let i = 0;i<count;i++){
@@ -86,7 +145,8 @@ function operate (arr){
         return arr[0];
     }
     else{
-        console.log(`smaller`);
+        console.log(arr);
+        return arr;
     }
 }
 
