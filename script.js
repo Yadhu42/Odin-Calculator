@@ -1,6 +1,6 @@
 const digit = document.querySelector(`.numBtn`);
 const num = document.querySelectorAll(`.digit`);
-const operator = document.querySelector(`.opBtn`);
+const operator = document.querySelectorAll(`.sign`);
 const equals = document.querySelector(`.equals`);
 const clear = document.querySelector(`.clear`);
 const visual = document.querySelector(`.display`);
@@ -11,7 +11,7 @@ entry.textContent=`0`;
 let input = [];
 let operand = [];
 const keyboard = `1234567890`;
-const allSymbols = `+-*/`;
+const allSymbols = `+*/`;
 
 num.forEach((element) =>{
     element.addEventListener(`click`,(event) =>{
@@ -25,18 +25,20 @@ num.forEach((element) =>{
     });
 });
 
-operator.addEventListener(`click`,(event) =>{
-    if(operand.length>0){
-        input.push(operand.join(``),event.target.textContent);
-        displayScreen(input.join(``)); 
-        operand = [];
-    }
-    else{
-        operand.push(event.target.textContent);
-        input.push(operand.join());
-        displayScreen(input.join(``));
-        operand=[];
-    }
+operator.forEach((element) =>{
+    element.addEventListener(`click`,(event) =>{
+        if(operand.length>0){
+            input.push(operand.join(``),event.target.textContent);
+            displayScreen(input.join(``)); 
+            operand = [];
+        }
+        else{
+            operand.push(event.target.textContent);
+            input.push(operand.join());
+            displayScreen(input.join(``));
+            operand=[];
+        }
+    });
 });
 
 document.addEventListener(`keypress`,(event) =>{
@@ -53,6 +55,7 @@ equals.addEventListener(`click`,(event) =>{
     else{
         input.pop();
     }
+    
     let nums = input.slice();
     operand = [];
     input=[];
@@ -78,7 +81,6 @@ function deleteNum(){
     console.log(`before delete:`,operand,input);
 
     input = checkNegative(input);
-    console.log(input);
 
     operand=[];
     input.pop();
@@ -93,17 +95,32 @@ function deleteNum(){
 
 function checkNegative(arr){
     if(allSymbols.includes(arr[0])){
-        if(arr[0]===`-`){
-            let neg = arr[1];
-            arr.splice(0,2,`-${neg}`);
-            console.log(arr);
-        }
-        else{
-            arr=arr.slice(1);
-            console.log(arr);
+        arr=arr.slice(1);
+    }
+
+    for(let i=0;i<arr.length;i++){
+        if(arr[i] === `-`){
+            if(arr[i+1] === `+`){
+                console.log(`-+`);
+                arr.splice(i+1,1);
+            }
+            else if(arr[i+1] === `-`){
+                console.log(`--`);
+                arr.splice(i,2,`+`);
+            }
+            else{
+                console.log(`normal`);
+                arr.splice(i,2,`-${arr[i+1]}`);
+            }
         }
     }
-    return arr;
+    if(arr.length===0){
+        arr.push(`--`);
+        return arr;
+    }
+    else{
+        return arr;
+    }
 }
 
 function sum(...theArgs){
@@ -113,7 +130,8 @@ function sum(...theArgs){
 }
 
 function subtract(a,b){
-    return Number(a) - Number(b);
+    let rem = Number(a) - Number(b);
+    return rem;
 }
 
 function multiply(...theArgs){
@@ -127,12 +145,14 @@ function divide(a,b){
         return(`Nah bruh :/`);
     }
     else{
-        return Number(a)/Number(b);
+        let rem = Number(a)/Number(b);
+        return rem;
     }
 }
 
 function operate (arr){
     arr = checkNegative(arr);
+    console.log(arr);
 
     if(arr.length >= 3){
         let count = (arr.length-1)/2;
@@ -142,10 +162,16 @@ function operate (arr){
             arr.splice(0,3,chunk);
            //console.log(input);
         }
-        return arr[0];
+        console.log(arr);
+        if(arr[0]===undefined || arr[0] === NaN){
+            arr[0]=`--`;
+            return arr;
+        }
+        else{
+            return arr[0];
+        }
     }
     else{
-        console.log(arr);
         return arr;
     }
 }
@@ -153,15 +179,19 @@ function operate (arr){
 function selectOperate(arr){
 
     if(arr.includes(`+`)){
+        console.log(`sum`);
         return sum(arr[0],arr[2]);     
     }
     if(arr.includes(`-`)){
+        console.log(`subtract`);
         return subtract(arr[0],arr[2]);
     }
     if(arr.includes(`*`)){
+        console.log(`product`);
         return multiply(arr[0],arr[2]);
     }
     if(arr.includes(`/`)){
+        console.log(`divide`);
         return divide(arr[0],arr[2]);
     }
         

@@ -8,6 +8,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #F8F5F1;
 }
 
 .calculator{
@@ -17,17 +18,31 @@ body{
     flex-direction: column;
     width: 650px;
     border: solid 1px black;
-    border-radius: 5px;
-    padding: 15px;
+    border-radius: 15px;
+    padding: 40px 30px;
     gap: 20px;
+    background-color: #343A40;
 }
 
 .display{
+    font-family: "Unbounded", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-size: 50px;
+    font-style: normal;
+    background-color:#FFAF00;
     border: solid 1px black;
     border-radius: 5px;
     width: 600px;
     padding: 5px;
     text-align: right;
+    box-shadow: inset -3px -3px 4px #d2a33cfe,
+    inset 3px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.display p{
+    text-shadow: 3px 1px 2px rgba(0, 0, 0, 0.6);
+    padding: 0 8px;
 }
 
 .allBtns{
@@ -45,6 +60,13 @@ body{
 .digit{
     width: 150px;
     padding: 5px;
+    font-family: "Inter Tight", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 35px;
+    background-color: #c2c1c1;
+    border-radius: 5px;
 }
 
 .symbols, .opBtn{
@@ -56,4 +78,27 @@ body{
 .sign{
     width: 80px;
     padding: 8px;
+    font-family: "Inter Tight", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 25px;
+    background-color: #c2c1c1;;
+    border-radius: 3px;
+}
+
+.clear{
+    background-color: #E26868;
+    color: white;
+    border-color: #E26868;
+}
+
+button{
+    box-shadow: inset 3px 3px 4px rgb(255,255,255,0.6),
+    inset -3px -3px 4px rgba(0, 0, 0, 0.6);
+}
+
+button:active{
+    box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.6),
+    inset -3px -3px 4px rgb(255,255,255,0.6)
 }
