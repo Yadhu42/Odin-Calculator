@@ -11,7 +11,8 @@ entry.textContent=`0`;
 let input = [];
 let operand = [];
 const keyboard = `1234567890`;
-const allSymbols = `+*/`;
+const symbols = `+*/`;
+const allSymbols = `+*/-`;
 
 num.forEach((element) =>{
     element.addEventListener(`click`,(event) =>{
@@ -80,7 +81,7 @@ function deleteNum(){
 
     console.log(`before delete:`,operand,input);
 
-    input = checkNegative(input);
+    input = checkNegativeSymbols(input);
 
     operand=[];
     input.pop();
@@ -93,14 +94,22 @@ function deleteNum(){
     }
 }
 
-function checkNegative(arr){
-    if(allSymbols.includes(arr[0])){
+function checkNegativeSymbols(arr){
+    if(symbols.includes(arr[0])){
         arr=arr.slice(1);
     }
 
-    for(let i=0;i<arr.length;i++){
+    if(arr[0]===`-`){
+        arr.splice(0,2,`-${arr[1]}`);
+    }
+
+    for(let i=1;i<=arr.length;i++){
         if(arr[i] === `-`){
-            if(arr[i+1] === `+`){
+            if(symbols.includes(arr[i-1]) ){
+                console.log(`add/mul/div`);
+                arr.splice(i,2,`-${arr[i+1]}`);
+            }
+            else if(arr[i+1] === `+`){
                 console.log(`-+`);
                 arr.splice(i+1,1);
             }
@@ -110,17 +119,15 @@ function checkNegative(arr){
             }
             else{
                 console.log(`normal`);
-                arr.splice(i,2,`-${arr[i+1]}`);
+                arr.splice(i,2,`+`,`-${arr[i+1]}`);
             }
         }
     }
-    if(arr.length===0){
-        arr.push(`--`);
-        return arr;
+    if(allSymbols.includes(arr[arr.length-1])){
+        arr.pop();
     }
-    else{
-        return arr;
-    }
+    return arr;
+    
 }
 
 function sum(...theArgs){
@@ -151,9 +158,7 @@ function divide(a,b){
 }
 
 function operate (arr){
-    arr = checkNegative(arr);
-    console.log(arr);
-
+    arr = checkNegativeSymbols(arr);
     if(arr.length >= 3){
         let count = (arr.length-1)/2;
         for(let i = 0;i<count;i++){
