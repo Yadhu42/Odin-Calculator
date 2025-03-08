@@ -1,5 +1,6 @@
 const digit = document.querySelector(`.numBtn`);
 const num = document.querySelectorAll(`.digit`);
+const decimal = document.querySelector(`.decimal`);
 const operator = document.querySelectorAll(`.sign`);
 const equals = document.querySelector(`.equals`);
 const clear = document.querySelector(`.clear`);
@@ -22,6 +23,9 @@ num.forEach((element) =>{
         }
         else{
             operand.push(event.target.textContent);
+            if(event.target.textContent === `.`){
+                event.target.setAttribute(`disabled`,true);
+            }
             displayScreen(operand.join(``));
         }
         if(operand.length >13){
@@ -40,6 +44,7 @@ operator.forEach((element) =>{
             input.push(operand.join(``),event.target.textContent);
             displayScreen(input.join(``)); 
             operand = [];
+            decimal.setAttribute(`disabled`,`false`);
             
             num.forEach((element) =>{
                 element.removeAttribute(`disabled`,`true`);
@@ -203,7 +208,7 @@ function selectOperate(arr){
         
 }
 
-setInterval(screenOff, 10000);
+setInterval(screenOff, 15000);
 
 function screenOn(){
     visual.setAttribute(`style`,`background-color:#FFAF00; box-shadow: inset -3px -3px 4px rgb(182, 139, 65), inset 5px 3px 5px rgba(0, 0, 0, 0.6);`);
