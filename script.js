@@ -16,6 +16,7 @@ const allSymbols = `+*/-`;
 
 num.forEach((element) =>{
     element.addEventListener(`click`,(event) =>{
+        screenOn();
         if(event.target.textContent === `Del`){
             deleteNum();
         }
@@ -23,15 +24,26 @@ num.forEach((element) =>{
             operand.push(event.target.textContent);
             displayScreen(operand.join(``));
         }
+        if(operand.length >13){
+            num.forEach((element) =>{
+                element.setAttribute(`disabled`,`true`);
+            })
+        }
     });
 });
 
+
 operator.forEach((element) =>{
     element.addEventListener(`click`,(event) =>{
+        screenOn();
         if(operand.length>0){
             input.push(operand.join(``),event.target.textContent);
             displayScreen(input.join(``)); 
             operand = [];
+            
+            num.forEach((element) =>{
+                element.removeAttribute(`disabled`,`true`);
+            });
         }
         else{
             operand.push(event.target.textContent);
@@ -79,8 +91,6 @@ function deleteNum(){
         input.push(operand.join(``));
     }
 
-    console.log(`before delete:`,operand,input);
-
     input = checkNegativeSymbols(input);
 
     operand=[];
@@ -106,19 +116,15 @@ function checkNegativeSymbols(arr){
     for(let i=1;i<=arr.length;i++){
         if(arr[i] === `-`){
             if(symbols.includes(arr[i-1]) ){
-                console.log(`add/mul/div`);
                 arr.splice(i,2,`-${arr[i+1]}`);
             }
             else if(arr[i+1] === `+`){
-                console.log(`-+`);
                 arr.splice(i+1,1);
             }
             else if(arr[i+1] === `-`){
-                console.log(`--`);
                 arr.splice(i,2,`+`);
             }
             else{
-                console.log(`normal`);
                 arr.splice(i,2,`+`,`-${arr[i+1]}`);
             }
         }
@@ -162,18 +168,17 @@ function operate (arr){
     if(arr.length >= 3){
         let count = (arr.length-1)/2;
         for(let i = 0;i<count;i++){
-            console.log(arr, arr.length);
+
             let chunk = selectOperate(arr.slice(0,3));
             arr.splice(0,3,chunk);
-           //console.log(input);
+
         }
-        console.log(arr);
         if(arr[0]===undefined || arr[0] === NaN){
             arr[0]=`--`;
             return arr;
         }
         else{
-            return arr[0];
+            return +arr[0].toFixed(11);
         }
     }
     else{
@@ -184,23 +189,26 @@ function operate (arr){
 function selectOperate(arr){
 
     if(arr.includes(`+`)){
-        console.log(`sum`);
         return sum(arr[0],arr[2]);     
     }
     if(arr.includes(`-`)){
-        console.log(`subtract`);
         return subtract(arr[0],arr[2]);
     }
     if(arr.includes(`*`)){
-        console.log(`product`);
         return multiply(arr[0],arr[2]);
     }
     if(arr.includes(`/`)){
-        console.log(`divide`);
         return divide(arr[0],arr[2]);
     }
         
 }
 
+setInterval(screenOff, 10000);
 
+function screenOn(){
+    visual.setAttribute(`style`,`background-color:#FFAF00; box-shadow: inset -3px -3px 4px rgb(182, 139, 65), inset 5px 3px 5px rgba(0, 0, 0, 0.6);`);
+}
 
+function screenOff(){
+    visual.setAttribute(`style`,`background-color:#27391C; box-shadow: inset -3px -3px 4px #3b4f38, inset 5px 3px 5px rgba(0, 0, 0, 0.6);`);
+}

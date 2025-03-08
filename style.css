@@ -1,3 +1,13 @@
+@font-face {
+    font-family:'DigitalClock' ;
+    src: url(./fonts/DS-DIGIT.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Casio';
+    src: url(./fonts/eurostile.woff) format('woff');
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,7 +18,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F8F5F1;
+    background-color: #257180;
+    background-image: url("https://www.transparenttextures.com/patterns/lined-paper.png");
 }
 
 .calculator{
@@ -19,30 +30,52 @@ body{
     width: 650px;
     border: solid 1px black;
     border-radius: 15px;
-    padding: 40px 30px;
-    gap: 20px;
+    padding: 30px 30px;
+    gap: 30px;
     background-color: #343A40;
+    box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.6), 
+    inset 1px 3px 5px rgba(255,255,255, 0.6);
+}
+
+.top{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    align-items:center;
+    gap: 3px;
+}
+
+.brand{
+    width: 580px;
+    font-family: 'Casio';
+    font-size: 28px;
+    font-weight:bolder;
+    text-align: left;
+    color: #c2c1c1;
 }
 
 .display{
-    font-family: "Unbounded", sans-serif;
+    font-family:'DigitalClock';
     font-optical-sizing: auto;
     font-weight: 700;
-    font-size: 50px;
+    font-size: 70px;
     font-style: normal;
-    background-color:#FFAF00;
+    background-color: #27391C;
     border: solid 1px black;
     border-radius: 5px;
     width: 600px;
     padding: 5px;
     text-align: right;
-    box-shadow: inset -3px -3px 4px #d2a33cfe,
-    inset 3px 2px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset -3px -3px 4px #3b4f38,
+    inset 5px 3px 5px rgba(0, 0, 0, 0.6);
 }
 
 .display p{
     text-shadow: 3px 1px 2px rgba(0, 0, 0, 0.6);
     padding: 0 8px;
+    overflow: hidden;
 }
 
 .allBtns{
@@ -62,7 +95,7 @@ body{
     padding: 5px;
     font-family: "Inter Tight", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 700;
+    font-weight: 900;
     font-style: normal;
     font-size: 35px;
     background-color: #c2c1c1;
@@ -96,9 +129,18 @@ body{
 button{
     box-shadow: inset 3px 3px 4px rgb(255,255,255,0.6),
     inset -3px -3px 4px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
 }
 
 button:active{
     box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.6),
     inset -3px -3px 4px rgb(255,255,255,0.6)
+}
+
+button:hover{
+    background-color: #e4e3e3;
+}
+
+.clear:hover{
+    background-color: #ff8787;
 }
